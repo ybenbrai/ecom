@@ -2,8 +2,9 @@ import NavBar from "@src/components/layout/Navbar";
 import NewsBar from "@src/components/layout/NewsBar";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "@css/layout/globals.css";
-import "@css/layout/navbar.css";
+import "@css/globals.css";
+import { DarkModeProvider } from "@src/context/DarkModeContext";
+import { AuthProvider } from "../context/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,16 +20,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        {/* Common components */}
-        <NewsBar />
-        <NavBar />
+      <DarkModeProvider>
+        <AuthProvider>
+          <body className={inter.className}>
+            {/* Common components */}
+            <NewsBar />
+            <NavBar />
 
-        {/* Container for page content */}
-        <div className="pt-28 flex min-h-screen w-full shadow-lg flex-col">
-          {children}
-        </div>
-      </body>
+            {/* Container for page content */}
+            <div className="pt-28 flex min-h-screen w-full shadow-lg flex-col dark:bg-[rgb(2,0,36)]">
+              {children}
+            </div>
+          </body>
+        </AuthProvider>
+      </DarkModeProvider>
     </html>
   );
 }

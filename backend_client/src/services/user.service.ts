@@ -4,48 +4,15 @@ import { Repository } from 'typeorm';
 import { User } from 'src/entities/user.entity';
 
 @Injectable()
-export class UserService {
+export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async createUser(
-    name: string,
-    email: string,
-    password: string,
-  ): Promise<User> {
-    const user = this.userRepository.create({ name, email, password });
-    return this.userRepository.save(user);
+  async findByEmail(email: string): Promise<User | null> {
+    return await this.userRepository.findOne({ where: { email } });
   }
 
-  async getUsers(): Promise<User[]> {
-    return this.userRepository.find();
-  }
-
-  async getUser(id: number): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { id } });
-    if (!user) {
-      throw new Error('User not found');
-    }
-    return user;
-  }
-
-  async updateUser(id: number, updateData: Partial<User>): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { id } });
-    if (!user) {
-      throw new Error('User not found');
-    }
-    this.userRepository.merge(user, updateData);
-    return this.userRepository.save(user);
-  }
-
-  async deleteUser(id: number): Promise<{ message: string }> {
-    const user = await this.userRepository.findOne({ where: { id } });
-    if (!user) {
-      throw new Error('User not found');
-    }
-    await this.userRepository.remove(user);
-    return { message: 'User deleted' };
-  }
+  // Additional methods like create, etc.
 }

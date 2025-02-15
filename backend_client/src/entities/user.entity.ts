@@ -5,7 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import * as bcrypt from 'bcrypt'; // bcrypt to hash passwords
+import * as bcrypt from 'bcrypt'; // Import bcrypt
 
 @Entity()
 export class User {
@@ -30,13 +30,14 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  // Method to hash the password before saving the user
+  // Method to hash the password using bcrypt
   async hashPassword() {
-    this.password = await bcrypt.hash(this.password, 10);
+    const saltRounds = 10; // Number of salt rounds
+    this.password = await bcrypt.hash(this.password, saltRounds);
   }
 
-  // Method to validate the password when logging in
-  async validatePassword(password: string): Promise<boolean> {
-    return await bcrypt.compare(password, this.password);
+  // Method to validate the password using bcrypt
+  async validatePassword(inputPassword: string): Promise<boolean> {
+    return await bcrypt.compare(inputPassword, this.password);
   }
 }

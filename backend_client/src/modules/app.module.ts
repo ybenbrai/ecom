@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { UserModule } from './user.module';
 import { ProductModule } from './product.module';
 import { CartModule } from './cart.module';
 import { OrderModule } from './order.module';
@@ -17,6 +16,10 @@ import { ProductImage } from 'src/entities/product-image.entity';
 import { Payment } from 'src/entities/payment.entity';
 import { NewsModule } from './news.module';
 import { News } from 'src/entities/news.entity';
+import { AuthModule } from './auth.module'; // Import AuthModule
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from 'src/auth/constants';
+import { UsersModule } from './user.module';
 
 @Module({
   imports: [
@@ -44,7 +47,12 @@ import { News } from 'src/entities/news.entity';
       }),
       inject: [ConfigService],
     }),
-    UserModule,
+    AuthModule, // Import AuthModule
+    JwtModule.register({
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '1h' },
+    }),
+    UsersModule,
     ProductModule,
     CartModule,
     OrderModule,

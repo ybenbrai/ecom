@@ -37,7 +37,7 @@ export default function Product() {
         {products.map((product, i) => (
           <div
             key={product.id || i}
-            className="w-full border border-gray-300 rounded-xl shadow-lg overflow-hidden bg-white"
+            className="w-full border border-gray-300 rounded-xl shadow-lg overflow-hidden bg-white dark:bg-[rgb(30,30,40)]"
           >
             <div className="p-4 border-b border-gray-200">
               <Image
@@ -50,13 +50,13 @@ export default function Product() {
             </div>
 
             <div className="p-4 text-center">
-              <h1 className="text-xl font-semibold text-gray-800">
+              <h1 className="text-xl font-semibold text-gray-800 dark:text-white">
                 {product.name}
               </h1>
-              <p className="text-sm font-light text-gray-800">
+              <p className="text-sm font-light text-gray-800 dark:text-gray-300">
                 {product.description}
               </p>
-              <p className="text-sm font-light text-red-800">
+              <p className="text-sm font-light text-red-800 dark:text-red-400">
                 {product.price} {product.currency}
               </p>
             </div>
