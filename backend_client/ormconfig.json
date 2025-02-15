@@ -1,0 +1,20 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "root",
+  "password": "rootpassword",
+  "database": "mydb",
+  "entities": [
+    "src/entities/user.entity.ts",
+    "src/entities/product.entity.ts",
+    "src/entities/cart.entity.ts",
+    "src/entities/order.entity.ts",
+    "src/entities/address.entity.ts",
+    "src/entities/order-item.entity.ts",
+    "src/entities/payment.entity.ts",
+    "src/entities/product-image.entity.ts"
+  ],
+  "synchronize": true,
+  "logging": true
+}

@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:latest
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword  # Change this to a secure password
+      MYSQL_DATABASE: mydb               # Optional: Create a default database
+      MYSQL_USER: user                   # Optional: Create a default user
+      MYSQL_PASSWORD: password           # Optional: Set a password for the default user
+    volumes:
+      - mysql_data:/var/lib/mysql        # Persist MySQL data
+    ports:
+      - "3306:3306"                     # Expose MySQL port
+    restart: always                      # Restart the container if it stops
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: db                       # Link to the MySQL service
+      PMA_PORT: 3306                     # MySQL port
+    ports:
+      - "8080:80"                        # Expose phpMyAdmin on port 8080
+    depends_on:
+      - db                               # Start phpMyAdmin after MySQL
+    restart: always
+
+volumes:
+  mysql_data:                            # Define a volume for MySQL data
